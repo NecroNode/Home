@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Binary Code Rain - NECRONODE</title>
+<style>
+    /* Set up the whole page's background */
+    body {
+        margin: 0;
+        height: 100vh;
+        background-color: #000000;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: sans-serif;
+        color: #ffffff;
+    }
+
+    /* Matrix rain container */
+    .matrix-rain {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* Each matrix column styling */
+    .matrix-column {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        color: #ffffff;
+        font-size: 0.8em;
+        animation: rain 2s linear infinite;
+        white-space: nowrap;
+    }
+
+    /* Centered static text for "NECRONODE" with white color and flicker */
+    .static-letter {
+        position: absolute;
+        font-size: 4em;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #ffffff; /* Set color to solid white */
+        animation: flicker 2s infinite; /* Flicker animation */
+    }
+
+    /* Flicker animation */
+    @keyframes flicker {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+        75% { opacity: 0.9; }
+    }
+
+    /* Animation for falling text */
+    @keyframes rain {
+        0% { transform: translateY(-100%); opacity: 1; }
+        100% { transform: translateY(100%); opacity: 0; }
+    }
+</style>
+</head>
+<body>
+    <!-- Centered letters spelling out "NECRONODE" in solid white with flicker effect -->
+    <div class="static-letter" style="left: 25%; top: 40%;">N</div>
+    <div class="static-letter" style="left: 31%; top: 40%;">E</div>
+    <div class="static-letter" style="left: 37%; top: 40%;">C</div>
+    <div class="static-letter" style="left: 43%; top: 40%;">R</div>
+    <div class="static-letter" style="left: 49%; top: 40%;">O</div>
+    <div class="static-letter" style="left: 55%; top: 40%;">N</div>
+    <div class="static-letter" style="left: 61%; top: 40%;">O</div>
+    <div class="static-letter" style="left: 67%; top: 40%;">D</div>
+    <div class="static-letter" style="left: 73%; top: 40%;">E</div>
+
+    <!-- Falling binary code rain -->
+    <div class="matrix-rain"></div>
+
+    <script>
+        // Create matrix rain effect
+        const matrixRain = document.querySelector('.matrix-rain');
+        const screenWidth = window.innerWidth;
+        const columns = Math.floor(screenWidth / 15); // Column spacing
+
+        // Function to create random binary characters (only "1" or "0")
+        function randomCharacter() {
+            return Math.random() > 0.5 ? '1' : '0';
+        }
+
+        // Generate columns of falling binary characters
+        for (let i = 0; i < columns; i++) {
+            const column = document.createElement('div');
+            column.classList.add('matrix-column');
+            column.style.left = `${i * 15}px`; // Column positioning
+            column.style.animationDuration = `${Math.random() * 2 + 1.5}s`; // Random animation speed
+
+            // Populate each column with binary characters
+            for (let j = 0; j < 30; j++) {
+                const character = document.createElement('div');
+                character.textContent = randomCharacter();
+                column.appendChild(character);
+            }
+
+            matrixRain.appendChild(column);
+        }
+
+        // Update characters at intervals
+        setInterval(() => {
+            document.querySelectorAll('.matrix-column div').forEach(char => {
+                char.textContent = randomCharacter();
+            });
+        }, 100);
+    </script>
+</body>
+</html>
+
